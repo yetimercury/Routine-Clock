@@ -1,5 +1,5 @@
 const DEMO_MODE = true;
-const DEMO_MINUTES = (6 * 60) + 20;
+const DEMO_MINUTES = (6 * 60) + 11;
 
 const tasks = [
   {
@@ -129,15 +129,24 @@ function updateClock() {
     }
     wedges.appendChild(path);
     if (isActive) {
-      const activePath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      activePath.setAttribute("d", describeArc(startAngle, endAngle, r + 14));
-      activePath.setAttribute("fill", fill);
-      activePath.setAttribute("opacity", "1");
-      activePath.setAttribute("stroke", "#111");
-      activePath.setAttribute("stroke-width", "6");
-      activePath.setAttribute("stroke-linejoin", "round");
-
-      wedges.appendChild(activePath);
+      const outerStart = polarToCartesian(startAngle, 184);
+      const outerEnd = polarToCartesian(endAngle, 184);
+      const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+    
+      const activeRing = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    
+      activeRing.setAttribute(
+        "d",
+        `M ${outerStart.x} ${outerStart.y}
+         A 184 184 0 ${largeArcFlag} 1 ${outerEnd.x} ${outerEnd.y}`
+      );
+    
+      activeRing.setAttribute("fill", "none");
+      activeRing.setAttribute("stroke", "#000");
+      activeRing.setAttribute("stroke-width", "18");
+      activeRing.setAttribute("stroke-linecap", "round");
+    
+      wedges.appendChild(activeRing);
     }
   });
 
@@ -156,7 +165,7 @@ function updateClock() {
       `${current.name}`;
 
     document.getElementById("nextTask").innerText =
-      `${remaining} minutes remaining · Real time: ${getRealTimeLabel()} · Demo time: 6:18 AM`;
+      `${remaining} minutes remaining · Real time: ${getRealTimeLabel()} · Demo time: 6:20 AM`;
   } else {
     document.getElementById("currentTask").innerText =
       "No active task";
