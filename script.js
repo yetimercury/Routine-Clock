@@ -128,6 +128,17 @@ function updateClock() {
       path.setAttribute("filter", "url(#activeGlow)");
     }
     wedges.appendChild(path);
+    if (isActive) {
+      const activePath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      activePath.setAttribute("d", describeArc(startAngle, endAngle, r + 14));
+      activePath.setAttribute("fill", fill);
+      activePath.setAttribute("opacity", "1");
+      activePath.setAttribute("stroke", "#111");
+      activePath.setAttribute("stroke-width", "6");
+      activePath.setAttribute("stroke-linejoin", "round");
+
+      wedges.appendChild(activePath);
+    }
   });
 
     const hourHand = document.getElementById("hourHand");
