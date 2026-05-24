@@ -1,24 +1,18 @@
 const DEMO_MODE = true;
 const DEMO_MINUTES = (6 * 60) + 11;
 
-const tasks = [
+const routines = [
   {
-    name: "Wake up kids",
+    name: "Morning Kids Routine",
     start: 6 * 60,
-    end: 6 * 60 + 10,
-    color: "#7BC96F"
-  },
-  {
-    name: "Play with dogs",
-    start: 6 * 60 + 10,
-    end: 6 * 60 + 25,
-    color: "#6FA8DC"
-  },
-  {
-    name: "Get kids dressed",
-    start: 6 * 60 + 25,
-    end: 6 * 60 + 35,
-    color: "#F6B26B"
+    end: 7 * 60,
+    faceColor: "#f4f1ea",
+    tasks: [
+      { name: "Wake up kids", start: 6 * 60, end: 6 * 60 + 10, color: "#7BC96F" },
+      { name: "Play with dogs", start: 6 * 60 + 10, end: 6 * 60 + 25, color: "#6FA8DC" },
+      { name: "Get kids dressed", start: 6 * 60 + 25, end: 6 * 60 + 35, color: "#F6B26B" },
+      { name: "Feed kids", start: 6 * 60 + 45, end: 6 * 60 + 55, color: "#E69138" }
+    ]
   }
 ];
 
@@ -92,8 +86,15 @@ function drawNumbers() {
 
 function updateClock() {
   const minutes = getRoutineMinutesNow();
-  const routineStart = 6 * 60;
-  const routineEnd = 7 * 60;
+  const activeRoutine = routines.find(routine =>
+  minutes >= routine.start && minutes < routine.end
+) || routines[0];
+
+const routineStart = activeRoutine.start;
+const routineEnd = activeRoutine.end;
+const tasks = activeRoutine.tasks;
+
+document.body.style.background = activeRoutine.faceColor;
 
   const wedges = document.getElementById("wedges");
   wedges.innerHTML = "";
