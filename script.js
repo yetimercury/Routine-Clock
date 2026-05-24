@@ -125,7 +125,7 @@ if (minutes >= task.start && minutes < task.end) {
 // UPCOMING TASKS
 if (minutes < task.start) {
   fill = task.color;
-  opacity = 0.03;
+  opacity = 0.08;
 }
 
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
