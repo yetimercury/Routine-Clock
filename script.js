@@ -102,7 +102,7 @@ document.body.style.background = activeRoutine.faceColor;
   const labels = document.getElementById("labels");
   labels.innerHTML = "";
 
-  tasks.forEach(task => {
+    tasks.forEach((task, index) => {
     let startAngle = minutesToAngle(task.start, routineStart, routineEnd);
     let endAngle = minutesToAngle(task.end, routineStart, routineEnd);
 
@@ -170,7 +170,7 @@ if (minutes < task.start) {
   const labelEnd = polarToCartesian(endAngle - 2, labelRadius);
   const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
 
-  const labelPathId = `labelPath-${task.name.replace(/\s+/g, "-")}`;
+  const labelPathId = `labelPath-${index}-${task.name.replace(/\s+/g, "-")}`;
 
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path.setAttribute("id", labelPathId);
