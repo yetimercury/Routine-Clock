@@ -163,27 +163,41 @@ if (minutes < task.start) {
       wedges.appendChild(activeRing);
     }
 
-    // LABEL UPCOMING TASKS
+// LABEL UPCOMING TASKS ON OUTER EDGE
 if (minutes < task.start) {
+  const labelRadius = 174;
+  const labelStart = polarToCartesian(startAngle + 2, labelRadius);
+  const labelEnd = polarToCartesian(endAngle - 2, labelRadius);
+  const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
 
-  const midAngle = (startAngle + endAngle) / 2;
-  const labelPoint = polarToCartesian(midAngle, 110);
+  const labelPathId = `labelPath-${task.name.replace(/\s+/g, "-")}`;
 
-  const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("id", labelPathId);
+  path.setAttribute(
+    "d",
+    `M ${labelStart.x} ${labelStart.y}
+     A ${labelRadius} ${labelRadius} 0 ${largeArcFlag} 1 ${labelEnd.x} ${labelEnd.y}`
+  );
+  path.setAttribute("fill", "none");
+  path.setAttribute("stroke", "none");
 
-  label.setAttribute("x", labelPoint.x);
-  label.setAttribute("y", labelPoint.y);
+  labels.appendChild(path);
 
-  label.setAttribute("text-anchor", "middle");
-  label.setAttribute("font-size", "11");
-  label.setAttribute("font-weight", "600");
+  const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  text.setAttribute("font-size", "10");
+  text.setAttribute("font-weight", "600");
+  text.setAttribute("fill", "#555");
+  text.setAttribute("opacity", "0.55");
 
-  label.setAttribute("fill", "#666");
-  label.setAttribute("opacity", "0.55");
+  const textPath = document.createElementNS("http://www.w3.org/2000/svg", "textPath");
+  textPath.setAttribute("href", `#${labelPathId}`);
+  textPath.setAttribute("startOffset", "50%");
+  textPath.setAttribute("text-anchor", "middle");
+  textPath.textContent = task.name;
 
-  label.textContent = task.name;
-
-  labels.appendChild(label);
+  text.appendChild(textPath);
+  labels.appendChild(text);
 }
     
   });
