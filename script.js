@@ -98,6 +98,9 @@ function updateClock() {
   const wedges = document.getElementById("wedges");
   wedges.innerHTML = "";
 
+  const labels = document.getElementById("labels");
+  labels.innerHTML = "";
+
   tasks.forEach(task => {
     let startAngle = minutesToAngle(task.start, routineStart, routineEnd);
     let endAngle = minutesToAngle(task.end, routineStart, routineEnd);
@@ -158,6 +161,30 @@ if (minutes < task.start) {
     
       wedges.appendChild(activeRing);
     }
+
+    // LABEL UPCOMING TASKS
+if (minutes < task.start) {
+
+  const midAngle = (startAngle + endAngle) / 2;
+  const labelPoint = polarToCartesian(midAngle, 110);
+
+  const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+
+  label.setAttribute("x", labelPoint.x);
+  label.setAttribute("y", labelPoint.y);
+
+  label.setAttribute("text-anchor", "middle");
+  label.setAttribute("font-size", "11");
+  label.setAttribute("font-weight", "600");
+
+  label.setAttribute("fill", "#666");
+  label.setAttribute("opacity", "0.55");
+
+  label.textContent = task.name;
+
+  labels.appendChild(label);
+}
+    
   });
 
     const hourHand = document.getElementById("hourHand");
