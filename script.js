@@ -1,3 +1,6 @@
+const DEMO_MODE = true;
+const DEMO_MINUTES = (6 * 60) + 18;
+
 const tasks = [
   {
     name: "Wake up kids",
@@ -23,13 +26,22 @@ const cx = 200;
 const cy = 200;
 const r = 160;
 
-function getMinutesNow() {
+function getRoutineMinutesNow() {
+  if (DEMO_MODE) {
+    return DEMO_MINUTES;
+  }
 
-  // DEMO MODE
-  // Pretend current time is 6:18 AM
+  const now = new Date();
+  return now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+}
 
-  return (6 * 60) + 18;
+function getRealTimeLabel() {
+  const now = new Date();
 
+  return now.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit"
+  });
 }
 
 function polarToCartesian(angle, radius) {
@@ -57,8 +69,29 @@ function minutesToAngle(minutes, routineStart, routineEnd) {
   return ((minutes - routineStart) / (routineEnd - routineStart)) * 360;
 }
 
+function drawNumbers() {
+  const numbers = document.getElementById("numbers");
+  numbers.innerHTML = "";
+
+  for (let i = 1; i <= 12; i++) {
+    const angle = i * 30;
+    const point = polarToCartesian(angle, 135);
+
+    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    text.setAttribute("x", point.x);
+    text.setAttribute("y", point.y + 7);
+    text.setAttribute("text-anchor", "middle");
+    text.setAttribute("font-size", "24");
+    text.setAttribute("font-weight", "bold");
+    text.setAttribute("fill", "#222");
+    text.textContent = i;
+
+    numbers.appendChild(text);
+  }
+}
+
 function updateClock() {
-  const minutes = getMinutesNow();
+  const minutes = getRoutineMinutesNow();
   const routineStart = 6 * 60;
   const routineEnd = 7 * 60;
 
@@ -82,13 +115,11 @@ function updateClock() {
       opacity = 1;
     }
 
-    if (true) {
-      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      path.setAttribute("d", describeArc(startAngle, endAngle, r));
-      path.setAttribute("fill", fill);
-      path.setAttribute("opacity", opacity);
-      wedges.appendChild(path);
-    }
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", describeArc(startAngle, endAngle, r));
+    path.setAttribute("fill", fill);
+    path.setAttribute("opacity", opacity);
+    wedges.appendChild(path);
   });
 
   const now = new Date();
@@ -100,13 +131,20 @@ function updateClock() {
 
   if (current) {
     const remaining = Math.ceil(current.end - minutes);
-    document.getElementById("currentTask").innerText = current.name;
-    document.getElementById("nextTask").innerText = `${remaining} minutes remaining`;
+    document.getElementById("currentTask").innerText =
+      `${current.name}`;
+
+    document.getElementById("nextTask").innerText =
+      `${remaining} minutes remaining · Real time: ${getRealTimeLabel()} · Demo time: 6:18 AM`;
   } else {
-    document.getElementById("currentTask").innerText = "No active task";
-    document.getElementById("nextTask").innerText = "";
+    document.getElementById("currentTask").innerText =
+      "No active task";
+
+    document.getElementById("nextTask").innerText =
+      `Real time: ${getRealTimeLabel()}`;
   }
 }
 
+drawNumbers();
 setInterval(updateClock, 1000);
 updateClock();
