@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Routine Clock</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="<stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
@@ -12,7 +12,6 @@
       <circle cx="200" cy="200" r="180" class="clock-face"/>
       <!-- Dynamic wedges go here -->
       <g id="wedges"></g>
-      <g id="numbers"></g>
       <!-- Clock hand -->
       <line id="hand"
             x1="200"
@@ -22,6 +21,7 @@
             stroke="black"
             stroke-width="6"
             stroke-linecap="round"/>
+      <g id="numbers"></g>
     </svg>
     <div class="info">
       <h1 id="currentTask">Loading...</h1>
