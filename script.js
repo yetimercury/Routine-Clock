@@ -170,24 +170,24 @@ if (minutes < task.start) {
   const current = tasks.find(task => minutes >= task.start && minutes < task.end);
   const next = tasks.find(task => task.start > minutes);
 
- if (current) {
-  const remaining = Math.ceil(current.end - minutes);
-
-  document.getElementById("currentTask").innerText =
-    current.name;
-
-  document.getElementById("nextTask").innerText =
-    next
-      ? `${remaining} min left · Next: ${next.name}`
-      : `${remaining} min left · Last task`;
-} else {
-  document.getElementById("currentTask").innerText =
-    "No active task";
-
-  document.getElementById("nextTask").innerText =
-    next
-      ? `Next: ${next.name}`
-      : "Routine complete";
+   if (current) {
+    const remaining = Math.ceil(current.end - minutes);
+  
+    document.getElementById("currentTask").innerText =
+      current.name;
+  
+    document.getElementById("nextTask").innerText =
+      next
+        ? `${remaining} min left · Up next: ${next.name}`
+        : `${remaining} min left · Last task`;
+  } else {
+    document.getElementById("currentTask").innerText =
+      "No active task";
+  
+    document.getElementById("nextTask").innerText =
+      next
+        ? `Up next: ${next.name}`
+        : "Routine complete";
 }
 }
 
