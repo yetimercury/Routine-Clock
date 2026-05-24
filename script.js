@@ -122,9 +122,8 @@ function updateClock() {
     wedges.appendChild(path);
   });
 
-  const now = new Date();
   const hand = document.getElementById("hand");
-  const handAngle = (now.getMinutes() / 60) * 360;
+  const handAngle = minutesToAngle(minutes, routineStart, routineEnd);
   hand.setAttribute("transform", `rotate(${handAngle} 200 200)`);
 
   const current = tasks.find(task => minutes >= task.start && minutes < task.end);
