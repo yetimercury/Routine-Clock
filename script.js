@@ -110,21 +110,29 @@ function updateClock() {
       opacity = 0.25;
     }
 
+    let isActive = false;
+
     if (minutes >= task.start && minutes < task.end) {
       startAngle = minutesToAngle(minutes, routineStart, routineEnd);
       opacity = 1;
+      isActive = true;
     }
 
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", describeArc(startAngle, endAngle, r));
     path.setAttribute("fill", fill);
     path.setAttribute("opacity", opacity);
+    if (isActive) {
+      path.setAttribute("stroke", "#222");
+      path.setAttribute("stroke-width", "4");
+      path.setAttribute("filter", "url(#activeGlow)");
+    }
     wedges.appendChild(path);
   });
 
     const hourHand = document.getElementById("hourHand");
     hourHand.setAttribute("transform", `rotate(180 200 200)`);
-    
+
     const hand = document.getElementById("hand");
     const handAngle = minutesToAngle(minutes, routineStart, routineEnd);
     hand.setAttribute("transform", `rotate(${handAngle} 200 200)`);
