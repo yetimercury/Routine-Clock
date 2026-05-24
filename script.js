@@ -24,8 +24,12 @@ const cy = 200;
 const r = 160;
 
 function getMinutesNow() {
-  const now = new Date();
-  return now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+
+  // DEMO MODE
+  // Pretend current time is 6:18 AM
+
+  return (6 * 60) + 18;
+
 }
 
 function polarToCartesian(angle, radius) {
