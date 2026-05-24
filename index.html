@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Routine Clock</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <svg id="clock" width="400" height="400" viewBox="0 0 400 400">
+      <circle cx="200" cy="200" r="180" class="clock-face"/>
+      <!-- Dynamic wedges go here -->
+      <g id="wedges"></g>
+      <!-- Clock hand -->
+      <line id="hand"
+            x1="200"
+            y1="200"
+            x2="200"
+            y2="40"
+            stroke="black"
+            stroke-width="6"
+            stroke-linecap="round"/>
+    </svg>
+    <div class="info">
+      <h1 id="currentTask">Loading...</h1>
+      <p id="nextTask"></p>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
