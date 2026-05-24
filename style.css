@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  background: #f4f1ea;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #222;
+}
+.container {
+  text-align: center;
+}
+.clock-face {
+  fill: white;
+  stroke: #ddd;
+  stroke-width: 4;
+}
+.info {
+  margin-top: 20px;
+}
+h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+p {
+  font-size: 1.2rem;
+  color: #666;
+}
