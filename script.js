@@ -1,5 +1,5 @@
 const DEMO_MODE = true;
-const DEMO_MINUTES = (6 * 60) + 18;
+const DEMO_MINUTES = (6 * 60) + 20;
 
 const tasks = [
   {
