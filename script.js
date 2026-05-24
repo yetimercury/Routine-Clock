@@ -82,7 +82,7 @@ function updateClock() {
       opacity = 1;
     }
 
-    if (minutes < task.end) {
+    if (true) {
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path.setAttribute("d", describeArc(startAngle, endAngle, r));
       path.setAttribute("fill", fill);
