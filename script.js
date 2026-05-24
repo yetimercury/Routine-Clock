@@ -103,20 +103,30 @@ function updateClock() {
     let endAngle = minutesToAngle(task.end, routineStart, routineEnd);
 
     let fill = task.color;
-    let opacity = 0.35;
+let opacity = 0.22;
+let isActive = false;
 
-    if (minutes >= task.end) {
-      fill = "#bbbbbb";
-      opacity = 0.25;
-    }
+// PAST TASKS
+if (minutes >= task.end) {
+  fill = "#B8B8B8";
+  opacity = 0.18;
+}
 
-    let isActive = false;
+// CURRENT TASK
+if (minutes >= task.start && minutes < task.end) {
+  startAngle = minutesToAngle(minutes, routineStart, routineEnd);
 
-    if (minutes >= task.start && minutes < task.end) {
-      startAngle = minutesToAngle(minutes, routineStart, routineEnd);
-      opacity = 1;
-      isActive = true;
-    }
+  fill = task.color;
+  opacity = 1;
+
+  isActive = true;
+}
+
+// UPCOMING TASKS
+if (minutes < task.start) {
+  fill = task.color;
+  opacity = 0.38;
+}
 
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", describeArc(startAngle, endAngle, r));
@@ -158,21 +168,27 @@ function updateClock() {
     hand.setAttribute("transform", `rotate(${handAngle} 200 200)`);
 
   const current = tasks.find(task => minutes >= task.start && minutes < task.end);
+  const next = tasks.find(task => task.start > minutes);
 
-  if (current) {
-    const remaining = Math.ceil(current.end - minutes);
-    document.getElementById("currentTask").innerText =
-      `${current.name}`;
+ if (current) {
+  const remaining = Math.ceil(current.end - minutes);
 
-    document.getElementById("nextTask").innerText =
-      `${remaining} minutes remaining · Real time: ${getRealTimeLabel()} · Demo time: 6:20 AM`;
-  } else {
-    document.getElementById("currentTask").innerText =
-      "No active task";
+  document.getElementById("currentTask").innerText =
+    current.name;
 
-    document.getElementById("nextTask").innerText =
-      `Real time: ${getRealTimeLabel()}`;
-  }
+  document.getElementById("nextTask").innerText =
+    next
+      ? `${remaining} min left · Next: ${next.name}`
+      : `${remaining} min left · Last task`;
+} else {
+  document.getElementById("currentTask").innerText =
+    "No active task";
+
+  document.getElementById("nextTask").innerText =
+    next
+      ? `Next: ${next.name}`
+      : "Routine complete";
+}
 }
 
 drawNumbers();
