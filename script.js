@@ -122,9 +122,12 @@ function updateClock() {
     wedges.appendChild(path);
   });
 
-  const hand = document.getElementById("hand");
-  const handAngle = minutesToAngle(minutes, routineStart, routineEnd);
-  hand.setAttribute("transform", `rotate(${handAngle} 200 200)`);
+    const hourHand = document.getElementById("hourHand");
+    hourHand.setAttribute("transform", `rotate(180 200 200)`);
+    
+    const hand = document.getElementById("hand");
+    const handAngle = minutesToAngle(minutes, routineStart, routineEnd);
+    hand.setAttribute("transform", `rotate(${handAngle} 200 200)`);
 
   const current = tasks.find(task => minutes >= task.start && minutes < task.end);
 
